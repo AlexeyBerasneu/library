@@ -13,12 +13,8 @@ public class Book {
         this.availableCopies = availableCopies;
     }
 
-    public void increaseAvailableCopies(int increase) {
-        this.availableCopies += increase;
-    }
-
-    public void decreaseAvailableCopies(int decrease) {
-        this.availableCopies -= decrease;
+    public void changeAvailableCopies(int indicate) {
+        this.availableCopies += indicate;
     }
 
     public String getTitle() {

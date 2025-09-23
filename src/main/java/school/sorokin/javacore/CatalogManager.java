@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class CatalogManager {
     private final Scanner scanner = new Scanner(System.in);
     private final List<Book> catalog;
-    private final String INVALID_MESSAGE = "Invalid %s try again.\n";
-    private final String ENTER_MESSAGE = "Enter %s : ";
+    private static final String INVALID_MESSAGE = "Invalid %s try again.\n";
+    private static final String ENTER_MESSAGE = "Enter %s : ";
 
     public CatalogManager() {
         catalog = new ArrayList<>();
@@ -39,16 +39,14 @@ public class CatalogManager {
     }
 
     public void takeBook() {
-        mangeCopies(0);
-        System.out.println("The book has been taken.");
+        manageCopies(-1);
     }
 
     public void returnBook() {
-        mangeCopies(1);
-        System.out.println("The book has been returned.");
+        manageCopies(1);
     }
 
-    private void mangeCopies(int indicate) {
+    private void manageCopies(int indicate) {
         String title = "";
         while (true) {
             System.out.print("Enter title: ");
@@ -64,17 +62,16 @@ public class CatalogManager {
             for (Book temp : catalog) {
                 if (temp.getTitle().equals(title)) {
                     count++;
-                    switch (indicate) {
-                        case 0 -> {
-                            if (temp.getAvailableCopies() > 0) {
-                                temp.decreaseAvailableCopies(1);
-                            } else {
-                                throw new NoAvailableCopiesException("The book does not have enough copies. Choose another one.");
-                            }
+                    if (indicate == -1) {
+                        if (temp.getAvailableCopies() > 0) {
+                            temp.changeAvailableCopies(indicate);
+                            System.out.println("The book has been taken.");
+                        } else {
+                            throw new NoAvailableCopiesException("The book does not have enough copies. Choose another one.");
                         }
-                        case 1 -> {
-                            temp.increaseAvailableCopies(1);
-                        }
+                    } else {
+                        temp.changeAvailableCopies(indicate);
+                        System.out.println("The book has been returned.");
                     }
                 }
             }

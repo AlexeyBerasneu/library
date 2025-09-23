@@ -26,11 +26,7 @@ public class Main {
                     }
                     default -> throw new InputMismatchException("Input data mismatch. Please try again.");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            } catch (NoAvailableCopiesException e) {
-                System.out.println(e.getMessage());
-            } catch (ItemNotFoundException e) {
+            } catch (InputMismatchException  | NoAvailableCopiesException  | ItemNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         }
